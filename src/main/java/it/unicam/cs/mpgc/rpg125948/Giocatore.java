@@ -80,20 +80,23 @@ public class Giocatore {
 
     public void riposa() {
 
-        stanchezza=Math.max(STANCHEZZA_MINIMA,stanchezza - RECUPERO_RIPOSO);
+            stanchezza=Math.max(STANCHEZZA_MINIMA,stanchezza - RECUPERO_RIPOSO);
 
 
     }
 
     public void allenati(Statistica statistica) {
-
-        switch (statistica) {
-            case TIRO -> tiro = Math.min(STATISTICA_MASSIMA, tiro + MIGLIORAMENTO_ALLENAMENTO);
-            case DIFESA -> difesa = Math.min(STATISTICA_MASSIMA, difesa+ MIGLIORAMENTO_ALLENAMENTO);
-            case PASSAGGIO -> passaggio = Math.min(STATISTICA_MASSIMA, passaggio + MIGLIORAMENTO_ALLENAMENTO);
-            case VELOCITA -> velocita = Math.min(STATISTICA_MASSIMA, velocita + MIGLIORAMENTO_ALLENAMENTO);
+        if (stanchezza >=STANCHEZZA_MASSIMA) {
+            return;
+        } else {
+            switch (statistica) {
+                case TIRO -> tiro = Math.min(STATISTICA_MASSIMA, tiro + MIGLIORAMENTO_ALLENAMENTO);
+                case DIFESA -> difesa = Math.min(STATISTICA_MASSIMA, difesa + MIGLIORAMENTO_ALLENAMENTO);
+                case PASSAGGIO -> passaggio = Math.min(STATISTICA_MASSIMA, passaggio + MIGLIORAMENTO_ALLENAMENTO);
+                case VELOCITA -> velocita = Math.min(STATISTICA_MASSIMA, velocita + MIGLIORAMENTO_ALLENAMENTO);
+            }
+            stanchezza = Math.min(STANCHEZZA_MASSIMA, stanchezza + FATICA_ALLENAMENTO);
         }
-        stanchezza = Math.min(STANCHEZZA_MASSIMA, stanchezza + FATICA_ALLENAMENTO);
     }
 
     @Override
