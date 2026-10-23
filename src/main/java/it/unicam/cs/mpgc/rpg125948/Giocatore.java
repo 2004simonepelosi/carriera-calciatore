@@ -92,9 +92,8 @@ public class Giocatore {
             case DIFESA -> difesa = Math.min(STATISTICA_MASSIMA, difesa+ MIGLIORAMENTO_ALLENAMENTO);
             case PASSAGGIO -> passaggio = Math.min(STATISTICA_MASSIMA, passaggio + MIGLIORAMENTO_ALLENAMENTO);
             case VELOCITA -> velocita = Math.min(STATISTICA_MASSIMA, velocita + MIGLIORAMENTO_ALLENAMENTO);
-            default -> throw new IllegalArgumentException("Statistica sconosciuta: " + statistica);
         }
-
+        stanchezza = Math.min(STANCHEZZA_MASSIMA, stanchezza + FATICA_ALLENAMENTO);
     }
 
     @Override
