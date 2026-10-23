@@ -87,6 +87,9 @@ public class Giocatore {
 
     public void allenati(Statistica statistica) {
         if (stanchezza >=STANCHEZZA_MASSIMA) {
+            return;
+        }else{
+
             switch (statistica) {
                 case TIRO -> tiro = Math.min(STATISTICA_MASSIMA, tiro + MIGLIORAMENTO_ALLENAMENTO);
                 case DIFESA -> difesa = Math.min(STATISTICA_MASSIMA, difesa + MIGLIORAMENTO_ALLENAMENTO);

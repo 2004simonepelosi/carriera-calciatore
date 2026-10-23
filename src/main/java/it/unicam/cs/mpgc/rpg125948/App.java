@@ -13,7 +13,9 @@ public class App extends Application {
 
         Squadra s =new Squadra("Roma", 50);
         Giocatore g = new Giocatore("Simone", "pelosi", Ruolo.DIFENSORE, s, 22);
-
+        Partita p = new Partita(new Squadra("Lazio", 60), 15, 1);
+        System.out.println(p);
+        System.out.println(p.isBuonaPrestazione());
 
         Label giocatore = new Label("nome: " + g.getNome() + "cognome: " + g.getCognome() + "nome squadra: " + g.getSquadra().getNome() );
         Label statistiche = new Label("Tiro: " + g.getTiro() );
