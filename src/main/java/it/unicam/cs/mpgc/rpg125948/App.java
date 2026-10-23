@@ -14,7 +14,7 @@ public class App extends Application {
         stage.setTitle("Carriera da calciatore");
         stage.setScene(scena);
         Giocatore s = new Giocatore("Simone", "pelosi", Ruolo.DIFENSORE, "Roma", 22);
-        s.allenati("tiro");
+        s.allenati(Statistica.TIRO);
         System.out.println(s.getTiro());
         s.riposa();
         System.out.println(s.getStanchezza());

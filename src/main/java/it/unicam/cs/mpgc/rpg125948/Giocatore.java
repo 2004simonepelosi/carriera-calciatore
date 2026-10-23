@@ -21,6 +21,20 @@ public class Giocatore {
     private int passaggio = STATISTICA_INIZIALE;
     private int difesa = STATISTICA_INIZIALE;
 
+
+
+    public Giocatore(String nome, String cognome, Ruolo ruolo, String squadra, int eta) {
+
+        this.nome = nome;
+        this.cognome = cognome;
+        this.ruolo = ruolo;
+        this.squadra = squadra;
+        this.eta = eta;
+
+
+    }
+
+
     public String getNome() {
         return nome;
     }
@@ -63,33 +77,28 @@ public class Giocatore {
 
 
 
-    public Giocatore(String nome, String cognome, Ruolo ruolo, String squadra, int eta) {
-
-        this.nome = nome;
-        this.cognome = cognome;
-        this.ruolo = ruolo;
-        this.squadra = squadra;
-        this.eta = eta;
-
-
-    }
 
     public void riposa() {
 
-        stanchezza=Math.max(STANCHEZZA_MINIMA,stanchezza- RECUPERO_RIPOSO);
+        stanchezza=Math.max(STANCHEZZA_MINIMA,stanchezza - RECUPERO_RIPOSO);
 
 
     }
 
-    public void allenati(String statistica) {
+    public void allenati(Statistica statistica) {
 
         switch (statistica) {
-            case "tiro" -> tiro = Math.min(STATISTICA_MASSIMA, tiro + MIGLIORAMENTO_ALLENAMENTO);
-            case "difesa" -> difesa = Math.min(STATISTICA_MASSIMA, difesa+ MIGLIORAMENTO_ALLENAMENTO);
-            case "passaggio" -> passaggio = Math.min(STATISTICA_MASSIMA, passaggio + MIGLIORAMENTO_ALLENAMENTO);
-            case "velocita" -> velocita = Math.min(STATISTICA_MASSIMA, velocita + MIGLIORAMENTO_ALLENAMENTO);
+            case TIRO -> tiro = Math.min(STATISTICA_MASSIMA, tiro + MIGLIORAMENTO_ALLENAMENTO);
+            case DIFESA -> difesa = Math.min(STATISTICA_MASSIMA, difesa+ MIGLIORAMENTO_ALLENAMENTO);
+            case PASSAGGIO -> passaggio = Math.min(STATISTICA_MASSIMA, passaggio + MIGLIORAMENTO_ALLENAMENTO);
+            case VELOCITA -> velocita = Math.min(STATISTICA_MASSIMA, velocita + MIGLIORAMENTO_ALLENAMENTO);
             default -> throw new IllegalArgumentException("Statistica sconosciuta: " + statistica);
         }
-        stanchezza= Math.min(STANCHEZZA_MASSIMA, stanchezza + FATICA_ALLENAMENTO);
+
+    }
+
+    @Override
+    public String toString() {
+        return  cognome +""+ nome+ "" + "("+ ruolo.getAbbreviazione() + ")"+"" + squadra+ "" + eta;
     }
 }
