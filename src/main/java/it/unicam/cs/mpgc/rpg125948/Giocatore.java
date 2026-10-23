@@ -4,9 +4,9 @@ public class Giocatore {
     private String nome;
     private String cognome;
     private Ruolo ruolo;
-    private String squadra;
+    private Squadra squadra;
     private static final int STATISTICA_INIZIALE = 40;
-            private static final int MIGLIORAMENTO_ALLENAMENTO = 3;
+    private static final int MIGLIORAMENTO_ALLENAMENTO = 3;
     private static final int STATISTICA_MASSIMA = 100;
     private static final int STANCHEZZA_MASSIMA = 100;
     private static final int STANCHEZZA_MINIMA = 0;
@@ -23,7 +23,7 @@ public class Giocatore {
 
 
 
-    public Giocatore(String nome, String cognome, Ruolo ruolo, String squadra, int eta) {
+    public Giocatore(String nome, String cognome, Ruolo ruolo, Squadra squadra, int eta) {
 
         this.nome = nome;
         this.cognome = cognome;
@@ -47,7 +47,7 @@ public class Giocatore {
         return ruolo;
     }
 
-    public String getSquadra() {
+    public Squadra getSquadra() {
         return squadra;
     }
 
@@ -87,8 +87,6 @@ public class Giocatore {
 
     public void allenati(Statistica statistica) {
         if (stanchezza >=STANCHEZZA_MASSIMA) {
-            return;
-        } else {
             switch (statistica) {
                 case TIRO -> tiro = Math.min(STATISTICA_MASSIMA, tiro + MIGLIORAMENTO_ALLENAMENTO);
                 case DIFESA -> difesa = Math.min(STATISTICA_MASSIMA, difesa + MIGLIORAMENTO_ALLENAMENTO);
@@ -101,6 +99,6 @@ public class Giocatore {
 
     @Override
     public String toString() {
-        return  cognome +""+ nome+ "" + "("+ ruolo.getAbbreviazione() + ")"+"" + squadra+ "" + eta;
+        return  cognome +" "+ nome+ " " + "("+ ruolo.getAbbreviazione() + ")"+" " + squadra+ " " + eta;
     }
 }
