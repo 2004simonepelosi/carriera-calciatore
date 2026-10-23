@@ -104,4 +104,8 @@ public class Giocatore {
     public String toString() {
         return  cognome +" "+ nome+ " " + "("+ ruolo.getAbbreviazione() + ")"+" " + squadra+ " " + eta;
     }
+
+    public int getMediaStatistiche(){
+        return (difesa+velocita+passaggio+tiro)/4;
+    }
 }
