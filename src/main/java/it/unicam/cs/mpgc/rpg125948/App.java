@@ -13,6 +13,13 @@ public class App extends Application {
         Scene scena = new Scene(titolo, 400, 300);
         stage.setTitle("Carriera da calciatore");
         stage.setScene(scena);
+        Giocatore s = new Giocatore("Simone", "pelosi", Ruolo.DIFENSORE, "Roma", 22);
+        s.allenati("tiro");
+        System.out.println(s.getTiro());
+        s.riposa();
+        System.out.println(s.getStanchezza());
+
+
         stage.show();
     }
 
