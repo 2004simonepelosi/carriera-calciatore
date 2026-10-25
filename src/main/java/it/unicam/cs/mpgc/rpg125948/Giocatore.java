@@ -12,8 +12,9 @@ public class Giocatore {
     private static final int STANCHEZZA_MINIMA = 0;
 
     private static final int FATICA_ALLENAMENTO = 20;
-    private static final int RECUPERO_RIPOSO = 30;
+    private static final int RECUPERO_RIPOSO = 40;
 
+    private static final int FATICA_PARTITA = 30;
     private int eta;
     private int stanchezza = 0;
     private int velocita = STATISTICA_INIZIALE;
@@ -107,5 +108,8 @@ public class Giocatore {
 
     public int getMediaStatistiche(){
         return (difesa+velocita+passaggio+tiro)/4;
+    }
+    public void affaticaDopoPartita() {
+        stanchezza = Math.min(STANCHEZZA_MASSIMA, stanchezza + FATICA_PARTITA);
     }
 }

@@ -11,7 +11,7 @@ public enum Ruolo {
 
 
 
-    private int occasioniPerPartita;
+    private final int occasioniPerPartita;
 
     public int getOccasioniPerPartita() {
         return occasioniPerPartita;
