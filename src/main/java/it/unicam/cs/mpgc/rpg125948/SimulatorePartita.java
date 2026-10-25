@@ -7,8 +7,10 @@ public class SimulatorePartita {
     private static final int VOTO_BASE = 6;
     private static final int DIVISORE_DIFFERENZA = 10;
     private static final int DIVISORE_STANCHEZZA = 40;
-    private static final int OCCASIONI_PER_PARTITA = 3;
-    private static final int DIVISORE_TIRO = 4;
+
+    private static final int DIVISORE_TIRO = 3;
+        private static final int BONUS__VOTO_PER_GOL = 1;
+
 
     private final Random random;
 
@@ -17,12 +19,13 @@ public class SimulatorePartita {
     }
 
     public Partita gioca(Giocatore giocatore, Squadra avversario) {
-        int voto = calcolaVoto(giocatore, avversario);
         int gol = calcolaGol(giocatore);
+
+        int voto = calcolaVoto(giocatore, avversario,gol);
         return new Partita(avversario, voto, gol);
     }
 
-    private int calcolaVoto(Giocatore giocatore, Squadra avversario) {
+    private int calcolaVoto(Giocatore giocatore, Squadra avversario, int gol) {
         int differenza = giocatore.getMediaStatistiche() - avversario.getForza();
         int voto = VOTO_BASE
                 + differenza / DIVISORE_DIFFERENZA
@@ -34,7 +37,7 @@ public class SimulatorePartita {
     private int calcolaGol(Giocatore giocatore) {
         int probabilita = giocatore.getTiro() / DIVISORE_TIRO;
         int gol = 0;
-        for (int i = 0; i < OCCASIONI_PER_PARTITA; i++) {
+        for (int i = 0; i < giocatore.getRuolo().getOccasioniPerPartita(); i++) {
             if (random.nextInt(100) < probabilita) {
                 gol++;
             }

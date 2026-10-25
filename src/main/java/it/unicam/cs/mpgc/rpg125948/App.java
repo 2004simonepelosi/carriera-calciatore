@@ -14,7 +14,7 @@ public class App extends Application {
     public void start(Stage stage) {
 
         Squadra s =new Squadra("Roma", 50);
-        Giocatore g = new Giocatore("Simone", "pelosi", Ruolo.DIFENSORE, s, 22);
+        Giocatore g = new Giocatore("Simone", "pelosi", Ruolo.ATTACCANTE, s, 22);
 
         Label giocatore = new Label("nome: " + g.getNome() + "cognome: " + g.getCognome() + "nome squadra: " + g.getSquadra().getNome() );
         Label statistiche = new Label("Tiro: " + g.getTiro() );

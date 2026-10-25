@@ -2,15 +2,24 @@ package it.unicam.cs.mpgc.rpg125948;
 
 
 public enum Ruolo {
-    PORTIERE("POR"),
-    DIFENSORE("DIF"),
-    CENTROCAMPISTA("CEN"),
-    ATTACCANTE("ATT");
+    PORTIERE("POR",0),
+    DIFENSORE("DIF",1),
+    CENTROCAMPISTA("CEN",2),
+    ATTACCANTE("ATT",3);
 
     private final String abbreviazione;
 
-    Ruolo(String abbreviazione) {
+
+
+    private int occasioniPerPartita;
+
+    public int getOccasioniPerPartita() {
+        return occasioniPerPartita;
+    }
+
+    Ruolo(String abbreviazione, int occasioniPerPartita) {
         this.abbreviazione = abbreviazione;
+        this.abbreviazione= abbreviazione;
     }
 
     public String getAbbreviazione() {
