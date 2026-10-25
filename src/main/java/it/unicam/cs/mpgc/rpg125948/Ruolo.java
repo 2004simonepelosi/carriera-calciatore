@@ -19,7 +19,7 @@ public enum Ruolo {
 
     Ruolo(String abbreviazione, int occasioniPerPartita) {
         this.abbreviazione = abbreviazione;
-        this.abbreviazione= abbreviazione;
+        this.occasioniPerPartita= occasioniPerPartita;
     }
 
     public String getAbbreviazione() {
