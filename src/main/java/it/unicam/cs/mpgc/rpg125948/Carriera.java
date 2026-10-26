@@ -8,7 +8,8 @@ public class Carriera {
     private final Giocatore giocatore;
     private final SimulatorePartita simulatore;
     private final List<Squadra> avversari;
-    private final List<Partita> partite = new ArrayList<>();
+    private final List<Stagione> stagioniConcluse = new ArrayList<>();
+    private Stagione stagioneCorrente = new Stagione(1);
     private int settimana = 1;
 
     public Carriera(Giocatore giocatore, SimulatorePartita simulatore, List<Squadra> avversari) {
@@ -33,12 +34,21 @@ public class Carriera {
     private Partita giocaPartita() {
         Squadra avversario = avversari.get((settimana - 1) % avversari.size());
         Partita partita = simulatore.gioca(giocatore, avversario);
-        partite.add(partita);
+        stagioneCorrente.aggiungiPartita(partita);
         giocatore.affaticaDopoPartita();
         settimana++;
+        controllaFineStagione();
         return partita;
     }
 
+    private void controllaFineStagione() {
+        if (!stagioneCorrente.isFinita()) {
+            return;
+        }
+        stagioniConcluse.add(stagioneCorrente);
+        giocatore.invecchia();
+        stagioneCorrente = new Stagione(stagioneCorrente.getNumero() + 1);
+    }
     public Giocatore getGiocatore() {
         return giocatore;
     }
@@ -47,7 +57,11 @@ public class Carriera {
         return settimana;
     }
 
-    public List<Partita> getPartite() {
-        return List.copyOf(partite);
+    public Stagione getStagioneCorrente() {
+        return stagioneCorrente;
+    }
+
+    public List<Stagione> getStagioniConcluse() {
+        return List.copyOf(stagioniConcluse);
     }
 }
