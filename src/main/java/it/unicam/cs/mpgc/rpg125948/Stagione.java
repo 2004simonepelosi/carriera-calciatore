@@ -5,7 +5,7 @@ public class Stagione {
     public static final int PARTITE_PER_STAGIONE = 10;
 
 
-    public final int numero;
+    private final int numero;
     private final List<Partita> partite = new ArrayList<>();
 
     public Stagione(int numero) {

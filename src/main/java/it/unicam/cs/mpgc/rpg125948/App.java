@@ -11,7 +11,12 @@ import java.util.List;
 import java.util.Random;
 
 public class App extends Application {
-
+    private Carriera carriera;
+    private Label settimana;
+    private Label stagione;
+    private Label riepilogo;
+    private Label statistiche;
+    private Label stanchezza;
     @Override
     public void start(Stage stage) {
 
@@ -22,14 +27,23 @@ public class App extends Application {
                 new Squadra("Napoli", 70),
                 new Squadra("Empoli", 40)
         );
-        Carriera carriera = new Carriera(g, new SimulatorePartita(new Random()), avversari);
-
+        carriera = new Carriera(g, new SimulatorePartita(new Random()), avversari);
         Label giocatore = new Label(g.getNome() + " " + g.getCognome()
                 + " (" + g.getRuolo().getAbbreviazione() + ") - " + g.getSquadra().getNome());
-        Label settimana = new Label("Settimana: " + carriera.getSettimana());
-        Label statistiche = new Label("Tiro: " + g.getTiro());
-        Label stanchezza = new Label("Stanchezza: " + g.getStanchezza());
+        settimana = new Label("Settimana: " + carriera.getSettimana());
+
+
+        stagione = new Label("Stagione " + carriera.getStagioneCorrente().getNumero()
+                + " - Partite " + carriera.getStagioneCorrente().getPartite().size()
+                + "/" + Stagione.PARTITE_PER_STAGIONE);
+
+        riepilogo = new Label("Nessuna stagione conclusa");
+
+
+        statistiche = new Label("Tiro: " + g.getTiro());
+        stanchezza = new Label("Stanchezza: " + g.getStanchezza());
         Label risultato = new Label("Nessuna partita giocata");
+        aggiorna();
 
         Button bottoneAllena = new Button("Allena tiro");
         Button bottoneRiposa = new Button("Riposa");
@@ -37,21 +51,17 @@ public class App extends Application {
         bottoneAllena.setOnAction(e -> {
             Partita partita = carriera.allenati(Statistica.TIRO);
             risultato.setText(partita.toString());
-            statistiche.setText("Tiro: " + carriera.getGiocatore().getTiro());
-            stanchezza.setText("Stanchezza: " + carriera.getGiocatore().getStanchezza());
-            settimana.setText("Settimana: " + carriera.getSettimana());
+            aggiorna();
         });
 
         bottoneRiposa.setOnAction(e -> {
             Partita partita = carriera.riposa();
             risultato.setText(partita.toString());
-            statistiche.setText("Tiro: " + carriera.getGiocatore().getTiro());
-            stanchezza.setText("Stanchezza: " + carriera.getGiocatore().getStanchezza());
-            settimana.setText("Settimana: " + carriera.getSettimana());
+            aggiorna();
         });
 
         VBox box = new VBox(10);
-        box.getChildren().addAll(giocatore, settimana, statistiche, stanchezza,
+        box.getChildren().addAll(giocatore, settimana, stagione, riepilogo, statistiche, stanchezza,
                 bottoneAllena, bottoneRiposa, risultato);
 
         Scene scena = new Scene(box, 400, 300);
@@ -60,6 +70,24 @@ public class App extends Application {
         stage.show();
     }
 
+    private void aggiorna() {
+        Giocatore g = carriera.getGiocatore();
+
+        settimana.setText("Settimana: " + carriera.getSettimana());
+        stagione.setText("Stagione " + carriera.getStagioneCorrente().getNumero()
+                + " - Partite " + carriera.getStagioneCorrente().getPartite().size()
+                + "/" + Stagione.PARTITE_PER_STAGIONE);
+        statistiche.setText("Tiro: " + g.getTiro());
+        stanchezza.setText("Stanchezza: " + g.getStanchezza());
+
+        List<Stagione> concluse = carriera.getStagioniConcluse();
+        if (!concluse.isEmpty()) {
+            Stagione ultima = concluse.get(concluse.size() - 1);
+            riepilogo.setText("Stagione " + ultima.getNumero() + " conclusa - media voto "
+                    + String.format("%.2f", ultima.getMediaVoto())
+                    + ", gol " + ultima.getGolTotali());
+        }
+    }
     public static void main(String[] args) {
         launch(args);
     }
