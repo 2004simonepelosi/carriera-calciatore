@@ -14,7 +14,7 @@ public class Giocatore {
     private static final int FATICA_ALLENAMENTO = 20;
     private static final int RECUPERO_RIPOSO = 40;
 
-    private static final int FATICA_PARTITA = 30;
+    private static final int FATICA_PARTITA = 10;
     private int eta;
     private int stanchezza = 0;
     private int velocita = STATISTICA_INIZIALE;
@@ -111,5 +111,9 @@ public class Giocatore {
     }
     public void affaticaDopoPartita() {
         stanchezza = Math.min(STANCHEZZA_MASSIMA, stanchezza + FATICA_PARTITA);
+    }
+
+    public void invecchia(){
+        eta=eta+1;
     }
 }

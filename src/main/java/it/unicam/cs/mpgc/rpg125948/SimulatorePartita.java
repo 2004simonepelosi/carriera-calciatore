@@ -27,7 +27,7 @@ public class SimulatorePartita {
 
     private int calcolaVoto(Giocatore giocatore, Squadra avversario, int gol) {
         int differenza = giocatore.getMediaStatistiche() - avversario.getForza();
-        int voto = VOTO_BASE + differenza / DIVISORE_DIFFERENZA - giocatore.getStanchezza() / DIVISORE_STANCHEZZA + random.nextInt(-1, 2)+(gol+BONUS_VOTO_PER_GOL);          // -1, 0 oppure +1
+        int voto = VOTO_BASE + differenza / DIVISORE_DIFFERENZA - giocatore.getStanchezza() / DIVISORE_STANCHEZZA + random.nextInt(-1, 2)+(gol*BONUS_VOTO_PER_GOL);          // -1, 0 oppure +1
 
         return Math.max(Partita.VOTO_MINIMO, Math.min(Partita.VOTO_MASSIMO, voto));
     }
