@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.scene.control.ComboBox;
 
 import java.util.List;
 import java.util.Random;
@@ -15,6 +16,8 @@ public class App extends Application {
     private Label settimana;
     private Label stagione;
     private Label riepilogo;
+    private Label eta;
+
     private Label statistiche;
     private Label stanchezza;
     @Override
@@ -30,26 +33,28 @@ public class App extends Application {
         carriera = new Carriera(g, new SimulatorePartita(new Random()), avversari);
         Label giocatore = new Label(g.getNome() + " " + g.getCognome()
                 + " (" + g.getRuolo().getAbbreviazione() + ") - " + g.getSquadra().getNome());
-        settimana = new Label("Settimana: " + carriera.getSettimana());
+        settimana = new Label();
 
 
-        stagione = new Label("Stagione " + carriera.getStagioneCorrente().getNumero()
-                + " - Partite " + carriera.getStagioneCorrente().getPartite().size()
-                + "/" + Stagione.PARTITE_PER_STAGIONE);
-
-        riepilogo = new Label("Nessuna stagione conclusa");
+        stagione = new Label();
+        eta = new Label();
 
 
-        statistiche = new Label("Tiro: " + g.getTiro());
-        stanchezza = new Label("Stanchezza: " + g.getStanchezza());
+        riepilogo = new Label();
+
+
+        statistiche = new Label();
+        stanchezza = new Label();
         Label risultato = new Label("Nessuna partita giocata");
         aggiorna();
-
-        Button bottoneAllena = new Button("Allena tiro");
+        ComboBox<Statistica> sceltaStatistica = new ComboBox<>();
+        sceltaStatistica.getItems().addAll(Statistica.values());
+        sceltaStatistica.setValue(Statistica.TIRO);
+        Button bottoneAllena = new Button("Allena");
         Button bottoneRiposa = new Button("Riposa");
 
         bottoneAllena.setOnAction(e -> {
-            Partita partita = carriera.allenati(Statistica.TIRO);
+            Partita partita = carriera.allenati(sceltaStatistica.getValue());
             risultato.setText(partita.toString());
             aggiorna();
         });
@@ -61,7 +66,7 @@ public class App extends Application {
         });
 
         VBox box = new VBox(10);
-        box.getChildren().addAll(giocatore, settimana, stagione, riepilogo, statistiche, stanchezza,
+        box.getChildren().addAll(giocatore, eta, settimana, stagione, riepilogo, statistiche, stanchezza,sceltaStatistica,
                 bottoneAllena, bottoneRiposa, risultato);
 
         Scene scena = new Scene(box, 400, 300);
@@ -74,11 +79,14 @@ public class App extends Application {
         Giocatore g = carriera.getGiocatore();
 
         settimana.setText("Settimana: " + carriera.getSettimana());
-        stagione.setText("Stagione " + carriera.getStagioneCorrente().getNumero()
-                + " - Partite " + carriera.getStagioneCorrente().getPartite().size()
-                + "/" + Stagione.PARTITE_PER_STAGIONE);
-        statistiche.setText("Tiro: " + g.getTiro());
+        stagione.setText("Stagione " + carriera.getStagioneCorrente().getNumero() + " - Partite " + carriera.getStagioneCorrente().getPartite().size() + "/" + Stagione.PARTITE_PER_STAGIONE);
+        statistiche.setText("Velocità: " + g.getVelocita()
+                + "  Difesa: " + g.getDifesa()
+                + "  Tiro: " + g.getTiro()
+                + "  Passaggio: " + g.getPassaggio());
         stanchezza.setText("Stanchezza: " + g.getStanchezza());
+        eta.setText("Età: " + g.getEta());
+
 
         List<Stagione> concluse = carriera.getStagioniConcluse();
         if (!concluse.isEmpty()) {
