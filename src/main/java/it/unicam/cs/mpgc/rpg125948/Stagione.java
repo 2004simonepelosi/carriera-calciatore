@@ -1,7 +1,8 @@
 package it.unicam.cs.mpgc.rpg125948;
 import java.util.ArrayList;
 import java.util.List;
-public class Stagione {
+import java.io.Serializable;
+public class Stagione implements Serializable {
     public static final int PARTITE_PER_STAGIONE = 10;
 
 

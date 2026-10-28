@@ -1,6 +1,6 @@
 package it.unicam.cs.mpgc.rpg125948;
-
-public class Squadra {
+import java.io.Serializable;
+public class Squadra implements Serializable{
 
     private final String nome;
     private final int forza;

@@ -1,6 +1,6 @@
 package it.unicam.cs.mpgc.rpg125948;
-
-public class Giocatore {
+import java.io.Serializable;
+public class Giocatore implements Serializable {
     private String nome;
     private String cognome;
     private Ruolo ruolo;

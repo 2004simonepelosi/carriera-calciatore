@@ -10,6 +10,8 @@ import javafx.scene.control.ComboBox;
 
 import java.util.List;
 import java.util.Random;
+import java.io.File;
+import java.io.IOException;
 
 public class App extends Application {
     private Carriera carriera;
@@ -20,6 +22,8 @@ public class App extends Application {
 
     private Label statistiche;
     private Label stanchezza;
+
+    private final ArchivioCarriera archivio = new ArchivioCarrieraFile(new File("carriera.sav"));
     @Override
     public void start(Stage stage) {
 
@@ -65,9 +69,30 @@ public class App extends Application {
             aggiorna();
         });
 
+        Button bottoneSalva = new Button("Salva");
+        bottoneSalva.setOnAction(e -> {
+            try {
+                archivio.salva(carriera);
+                risultato.setText("Carriera salvata");
+            } catch (IOException ex) {
+                risultato.setText("Errore nel salvataggio: " + ex.getMessage());
+            }
+        });
+
+        Button bottoneCarica = new Button("Carica");
+        bottoneCarica.setOnAction(e -> {
+            try {
+                carriera = archivio.carica();
+                aggiorna();
+                risultato.setText("Carriera caricata");
+            } catch (IOException ex) {
+                risultato.setText("Nessun salvataggio trovato");
+            }
+        });
+
         VBox box = new VBox(10);
         box.getChildren().addAll(giocatore, eta, settimana, stagione, riepilogo, statistiche, stanchezza,sceltaStatistica,
-                bottoneAllena, bottoneRiposa, risultato);
+                bottoneAllena, bottoneRiposa,bottoneSalva, bottoneCarica,risultato);
 
         Scene scena = new Scene(box, 500, 450);
         stage.setTitle("Carriera da calciatore");
@@ -94,6 +119,8 @@ public class App extends Application {
             riepilogo.setText("Stagione " + ultima.getNumero() + " conclusa - media voto "
                     + String.format("%.2f", ultima.getMediaVoto())
                     + ", gol " + ultima.getGolTotali());
+        }else {
+            riepilogo.setText("Nessuna stagione conclusa");
         }
     }
     public static void main(String[] args) {

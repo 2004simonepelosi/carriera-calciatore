@@ -1,6 +1,7 @@
 package it.unicam.cs.mpgc.rpg125948;
+import java.io.Serializable;
 
-public class Partita {
+public class Partita implements Serializable{
 
 
     private final Squadra avversario;

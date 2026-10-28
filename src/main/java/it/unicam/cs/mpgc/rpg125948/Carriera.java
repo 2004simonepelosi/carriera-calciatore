@@ -2,8 +2,9 @@ package it.unicam.cs.mpgc.rpg125948;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.io.Serializable;
 
-public class Carriera {
+public class Carriera implements Serializable {
 
     private final Giocatore giocatore;
     private final SimulatorePartita simulatore;

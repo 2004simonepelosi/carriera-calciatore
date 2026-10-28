@@ -1,8 +1,9 @@
 package it.unicam.cs.mpgc.rpg125948;
 
 import java.util.Random;
+import java.io.Serializable;
 
-public class SimulatorePartita {
+public class SimulatorePartita implements Serializable{
 
     private static final int VOTO_BASE = 6;
     private static final int DIVISORE_DIFFERENZA = 10;
