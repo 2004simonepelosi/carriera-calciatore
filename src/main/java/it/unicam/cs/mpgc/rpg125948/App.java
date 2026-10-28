@@ -40,7 +40,7 @@ public class App extends Application {
         eta = new Label();
 
 
-        riepilogo = new Label();
+        riepilogo = new Label("Nessuna stagione conclusa");
 
 
         statistiche = new Label();
@@ -69,7 +69,7 @@ public class App extends Application {
         box.getChildren().addAll(giocatore, eta, settimana, stagione, riepilogo, statistiche, stanchezza,sceltaStatistica,
                 bottoneAllena, bottoneRiposa, risultato);
 
-        Scene scena = new Scene(box, 400, 300);
+        Scene scena = new Scene(box, 500, 450);
         stage.setTitle("Carriera da calciatore");
         stage.setScene(scena);
         stage.show();
