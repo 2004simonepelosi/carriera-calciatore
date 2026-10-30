@@ -26,10 +26,13 @@ public class App extends Application {
     private Stage stage;
 
     @Override
+
     public void start(Stage stage) {
         this.stage = stage;
         stage.setTitle("Carriera da calciatore");
-
+        mostraSchermataIniziale();
+    }
+    private void nuovaCarriera() {
         Squadra miaSquadra = new Squadra("Roma", 50);
         Giocatore g = new Giocatore("Simone", "Pelosi", Ruolo.ATTACCANTE, miaSquadra, 22);
         List<Squadra> avversari = List.of(
@@ -38,10 +41,34 @@ public class App extends Application {
                 new Squadra("Empoli", 40)
         );
         carriera = new Carriera(g, new SimulatorePartita(new Random()), avversari);
-
-        mostraSchermataGioco();
     }
+    private void mostraSchermataIniziale() {
+        Label titolo = new Label("Carriera da calciatore");
+        Label messaggio = new Label();
 
+        Button bottoneNuova = new Button("Nuova carriera");
+        bottoneNuova.setOnAction(e -> {
+            nuovaCarriera();
+            mostraSchermataGioco();
+        });
+
+        Button bottoneContinua = new Button("Continua");
+        bottoneContinua.setOnAction(e -> {
+            try {
+                carriera = archivio.carica();
+                mostraSchermataGioco();
+            } catch (IOException ex) {
+                messaggio.setText("Nessun salvataggio trovato");
+            }
+        });
+
+        VBox box = new VBox(10);
+        box.getChildren().addAll(titolo, bottoneNuova, bottoneContinua, messaggio);
+
+        Scene scena = new Scene(box, 500, 550);
+        stage.setScene(scena);
+        stage.show();
+    }
     private void mostraSchermataGioco() {
         Giocatore g = carriera.getGiocatore();
 
