@@ -7,7 +7,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
+import javafx.scene.control.TextField;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -32,9 +32,9 @@ public class App extends Application {
         stage.setTitle("Carriera da calciatore");
         mostraSchermataIniziale();
     }
-    private void nuovaCarriera() {
+    private void nuovaCarriera(String nome, String cognome, Ruolo ruolo, int eta) {
         Squadra miaSquadra = new Squadra("Roma", 50);
-        Giocatore g = new Giocatore("Simone", "Pelosi", Ruolo.ATTACCANTE, miaSquadra, 22);
+        Giocatore g = new Giocatore(nome, cognome, ruolo, miaSquadra, eta);
         List<Squadra> avversari = List.of(
                 new Squadra("Lazio", 60),
                 new Squadra("Napoli", 70),
@@ -46,10 +46,30 @@ public class App extends Application {
         Label titolo = new Label("Carriera da calciatore");
         Label messaggio = new Label();
 
+        TextField campoNome = new TextField();
+        campoNome.setPromptText("Nome");
+        TextField campoCognome = new TextField();
+        campoCognome.setPromptText("Cognome");
+        TextField campoEta = new TextField();
+        campoEta.setPromptText("Età");
+
+        ComboBox<Ruolo> sceltaRuolo = new ComboBox<>();
+        sceltaRuolo.getItems().addAll(Ruolo.values());
+        sceltaRuolo.setValue(Ruolo.ATTACCANTE);
+
         Button bottoneNuova = new Button("Nuova carriera");
         bottoneNuova.setOnAction(e -> {
-            nuovaCarriera();
-            mostraSchermataGioco();
+            try {
+                String nome = campoNome.getText().trim();
+                String cognome = campoCognome.getText().trim();
+                int eta = Integer.parseInt(campoEta.getText().trim());
+                nuovaCarriera(nome, cognome, sceltaRuolo.getValue(), eta);
+                mostraSchermataGioco();
+            } catch (NumberFormatException ex) {
+                messaggio.setText("L'età deve essere un numero");
+            } catch (IllegalArgumentException ex) {
+                messaggio.setText(ex.getMessage());
+            }
         });
 
         Button bottoneContinua = new Button("Continua");
@@ -63,7 +83,8 @@ public class App extends Application {
         });
 
         VBox box = new VBox(10);
-        box.getChildren().addAll(titolo, bottoneNuova, bottoneContinua, messaggio);
+        box.getChildren().addAll(titolo, campoNome, campoCognome, campoEta, sceltaRuolo,
+                bottoneNuova, bottoneContinua, messaggio);
 
         Scene scena = new Scene(box, 500, 550);
         stage.setScene(scena);

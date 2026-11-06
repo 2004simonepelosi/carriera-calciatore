@@ -15,6 +15,8 @@ public class Giocatore implements Serializable {
     private static final int RECUPERO_RIPOSO = 40;
 
     private static final int FATICA_PARTITA = 10;
+    private static final int ETA_MINIMA = 16;
+    private static final int ETA_MASSIMA = 40;
     private int eta;
     private int stanchezza = 0;
     private int velocita = STATISTICA_INIZIALE;
@@ -25,6 +27,13 @@ public class Giocatore implements Serializable {
 
 
     public Giocatore(String nome, String cognome, Ruolo ruolo, Squadra squadra, int eta) {
+        if (nome == null || nome.isBlank() || cognome == null || cognome.isBlank()) {
+            throw new IllegalArgumentException("Nome e cognome sono obbligatori");
+        }
+        if (eta < ETA_MINIMA || eta > ETA_MASSIMA) {
+            throw new IllegalArgumentException("L'età deve essere tra " + ETA_MINIMA + " e " + ETA_MASSIMA);
+        }
+
 
         this.nome = nome;
         this.cognome = cognome;
